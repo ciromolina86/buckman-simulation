@@ -1,6 +1,6 @@
-from handlers.comm_handler import S7_Manager
+from handlers.comm_handler import *
 import snap7
-from snap7.type import *
+from snap7.type import Area, BlocksList, Block
 
 def test1():
     # Dirección IP del PLC y otros parámetros de conexión
@@ -48,13 +48,50 @@ def test1():
 
 
 def main():
-    plc = S7_Manager()
-    print(plc)
+    plc = S7_Manager(ip_address='192.168.0.1')
     print(plc.get_cpu_info())
-    # plc.read_db(db_number=363, start=46, size=2)
-    plc.get_block_info()
+    db2_bytearray = plc.read_area(Area.DB, 2, 0, 416)
+    db2 = Analog_Filt_Scale(db2_bytearray)
+    print(db2)
+
+    # result = plc.
+    # print(result)
+    # print(snap7.util.get_real(result,46))
+    # print(plc.read_area())
+
+
+def solisPLC_read_db():
+    plc = snap7.client.Client()
+    plc.connect('192.168.0.1', 0, 1)
+
+    # reading 8 bytes from db 1
+    result_bytearray = plc.db_read(2, 0, 50)
+
+    # extracting values from result byte array
+    # bool1 = snap7.util.get_bool(result_bytearray, 0, 0)
+    # int1 = snap7.util.get_int(result_bytearray, 2)
+    real1 = snap7.util.get_real(result_bytearray, 46)
+
+    # print(f"bool1 = {bool1} \nint1 = {int1} \nreal1 = {real1}")
+    print(f"stat_pv = {real1}")
+
+
+def solisPLC_write_db():
+    plc = snap7.client.Client()
+    plc.connect('192.168.0.1', 0, 1)
+
+    # reading 8 bytes from db 1
+    result_bytearray = plc.db_read(1, 0, 8)
+
+    # modifying the real1 value on the result byte array
+    snap7.util.set_real(result_bytearray, 4, 1236.78)
+
+    # writing the result byte array with the modified real value to PLC
+    plc.db_write(1, 0, result_bytearray)
 
 
 if __name__ == "__main__":
-    # main()
-    test1()
+    main()
+    # solisPLC_read_db()
+    # solisPLC_write_db()
+    # solisPLC_read_db()
