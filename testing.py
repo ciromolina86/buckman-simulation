@@ -4,27 +4,28 @@ from snap7.type import Area
 
 
 def main():
-    plc = S7_Manager(ip_address='192.168.0.1')
+    plc = S7_Manager(ip_address='192.168.0.3')
     print(plc.get_cpu_info())
 
     print("read 1: original data")
-    db2_bytearray = plc.read_area(Area.DB, 2, 0, 416)  # read db raw data from PLC
-    db2 = Analog_Filt_Scale(db2_bytearray)  # interpret raw data as Analog_Filt_Scale object
-    print(db2.read_values())  # read values from Analog_Filt_Scale object
-    db2.Cfg_High_Range = 999.0  # modify attributes
-    db2.Cfg_Low_Range = 111.0  # modify attributes
-    db2.Cfg_High_Proc = 888.0  # modify attributes
-    db2.Cfg_Low_Proc = 222.0  # modify attributes
-    db2.Cfg_High_Warn = 777.0  # modify attributes
-    db2.Cfg_Low_Warn = 333.0  # modify attributes
-    print(db2.read_values())
-    db2_bytearray = db2.write_values()  # write Analog_Filt_Scale object attribute values to raw data
-    plc.write_area(Area.DB, 2, 0, db2_bytearray)  # write db raw data to PLC
+    db363_bytearray = plc.read_area(Area.DB, 363, 0, 416)  # read db raw data from PLC
+    db363 = Analog_Filt_Scale(db363_bytearray)  # interpret raw data as Analog_Filt_Scale object
+    print(db363)    # read values from Analog_Filt_Scale object
+    db363.Raw_Input = 26000.0  # modify attributes
+    db363.Cfg_High_Range = 150.0  # modify attributes
+    db363.Cfg_Low_Range = 0.0   # modify attributes
+    db363.Cfg_High_Proc = 120.0   # modify attributes
+    db363.Cfg_Low_Proc = 30.0    # modify attributes
+    db363.Cfg_High_Warn = 100.0   # modify attributes
+    db363.Cfg_Low_Warn = 50.0    # modify attributes
+    # print(db363.read_values())
+    db363_bytearray = db363.write_values()  # write Analog_Filt_Scale object attribute values to raw data
+    plc.write_area(Area.DB, 363, 0, db363_bytearray)  # write db raw data to PLC
 
     print("read 2: modified data")
-    db2_bytearray_ = plc.read_area(Area.DB, 2, 0, 416)
-    db2_ = Analog_Filt_Scale(db2_bytearray_)
-    print(db2_.read_values())
+    db363_bytearray_ = plc.read_area(Area.DB, 363, 0, 416)
+    db363_ = Analog_Filt_Scale(db363_bytearray_)
+    print(db363_)
 
 
 def solisPLC_read_db():
