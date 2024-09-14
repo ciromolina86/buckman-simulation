@@ -244,3 +244,157 @@ class Analog_Filt_Scale:
         set_time(self._buffer, 114, self.Cfg_Return_Auto)
 
         return self._buffer
+
+
+class SINAMICS:
+    def __init__(self, ip_address: str = '192.168.60.56', rack: int = 0, cpu_slot: int = 0, tcp_port: int = 102):
+        self._ip_address = ip_address
+        self._rack = rack
+        self._cpu_slot = cpu_slot
+        self._tcp_port = tcp_port
+
+        self._plc = snap7.client.Client()
+        self._plc.connect(self._ip_address, self._rack, self._cpu_slot)
+
+        if self._plc.get_connected():
+            print("PLC connected successfully!")
+        else:
+            print("Could not connect to PLC!")
+
+    def read_area(self, area: Area, db_number: int, start_byte: int, number_of_bytes: int) -> bytearray:
+        """
+        Read a data area from a PLC: DB, Inputs, Outputs, Memory, Timers and Counters.
+
+        Args:
+            area: area to be read from.
+            db_number: The DB number, only used when area=Areas.DB
+            start_byte: byte index to start reading.
+            number_of_bytes: number of bytes to read.
+
+        Returns:
+            Buffer with the data read.
+        """
+        try:
+            return self._plc.read_area(area, db_number, start_byte, number_of_bytes)
+        except Exception as e:
+            print(e)
+
+    def write_area(self, area: Area, db_number: int, start_byte: int, data: bytearray) -> int:
+        """
+        Writes a data area into a PLC.
+
+        Args:
+            area: area to be written.
+            db_number: number of the db to be written to. In case of Inputs, Marks or Outputs, this should be equal to 0
+            start_byte: byte index to start writing.
+            data: buffer to be written.
+
+        Returns:
+            Snap7 error code.
+        """
+        try:
+            self._plc.write_area(area, db_number, start_byte, data)
+        except Exception as e:
+            print(e)
+
+    def read_param(self, param_no, param_data_type, param_idx=0):
+        """
+        DB<param_no>.DB<param_data_type><offset>
+
+        where:
+        <param_no> … is G120X parameter number without index
+        <param_data_type> … is a DB offset size depending on Data type.
+        <offset> … for SINAMICS G120X is calculated as 1024+<param_idx>
+
+        :param param_no:
+        :param param_data_type:
+        :param param_idx:
+        :return:
+        """
+
+        offset = 1024 + param_idx
+
+        try:
+            if param_data_type == 'byte':
+                number_of_bytes = 1
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=number_of_bytes)
+                return get_byte(buffer, 0)
+
+            if param_data_type == 'int' or param_data_type == 'word':
+                number_of_bytes = 2
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=number_of_bytes)
+                return get_int(buffer, 0)
+
+            if param_data_type == 'dint' or param_data_type == 'dword':
+                number_of_bytes = 4
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=number_of_bytes)
+                return get_dint(buffer, 0)
+
+            if param_data_type == 'real':
+                number_of_bytes = 4
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=number_of_bytes)
+                return round(get_real(buffer, 0), 2)
+        except Exception as e:
+            print(e)
+
+    def write_param(self, buffer, data, param_no, param_data_type, param_idx=0):
+        """
+        DB<param_no>.DB<param_data_type><offset>
+
+        where:
+        <param_no> … is G120X parameter number without index
+        <param_data_type> … is a DB offset size depending on Data type.
+        <offset> … for SINAMICS G120X is calculated as 1024+<param_idx>
+
+        :param buffer:
+        :param data:
+        :param param_no:
+        :param param_data_type:
+        :param param_idx:
+        :return:
+        """
+
+        offset = 1024 + param_idx
+
+        try:
+            if param_data_type == 'byte':
+                set_byte(buffer, offset, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
+
+            if param_data_type == 'int' or param_data_type == 'word':
+                set_int(buffer, offset, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
+
+            if param_data_type == 'dint' or param_data_type == 'dword':
+                set_dint(buffer, offset, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
+
+            if param_data_type == 'real':
+                set_real(buffer, offset, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
+        except Exception as e:
+            print(e)
