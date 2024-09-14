@@ -1,7 +1,9 @@
+import enum
 import os
 import datetime
 import time
 import threading
+from typing import Union
 import snap7
 from snap7 import Client, Block, Area
 from snap7.util import *
@@ -246,6 +248,15 @@ class Analog_Filt_Scale:
         return self._buffer
 
 
+class DataType(enum.IntEnum):
+    Integer8 = 1
+    Integer16 = 2
+    Unsigned8 = 1
+    Unsigned16 = 2
+    Unsigned32 = 4
+    FloatingPoint32 = 4
+
+
 class SINAMICS:
     def __init__(self, ip_address: str = '192.168.60.56', rack: int = 0, cpu_slot: int = 0, tcp_port: int = 102):
         self._ip_address = ip_address
@@ -297,7 +308,7 @@ class SINAMICS:
         except Exception as e:
             print(e)
 
-    def read_param(self, param_no, param_data_type, param_idx=0):
+    def read_param(self, param_no: int, param_data_type: DataType, param_idx: int = 0):
         """
         DB<param_no>.DB<param_data_type><offset>
 
@@ -315,41 +326,25 @@ class SINAMICS:
         offset = 1024 + param_idx
 
         try:
-            if param_data_type == 'byte':
-                number_of_bytes = 1
-                buffer = self.read_area(area=Area.DB,
-                                        db_number=param_no,
-                                        start_byte=offset,
-                                        number_of_bytes=number_of_bytes)
+            buffer = self.read_area(area=Area.DB,
+                                    db_number=param_no,
+                                    start_byte=offset,
+                                    number_of_bytes=param_data_type)
+
+            if param_data_type == DataType.Integer8 or param_data_type == DataType.Unsigned8:
                 return get_byte(buffer, 0)
-
-            if param_data_type == 'int' or param_data_type == 'word':
-                number_of_bytes = 2
-                buffer = self.read_area(area=Area.DB,
-                                        db_number=param_no,
-                                        start_byte=offset,
-                                        number_of_bytes=number_of_bytes)
+            if param_data_type == DataType.Integer16 or param_data_type == DataType.Unsigned16:
                 return get_int(buffer, 0)
-
-            if param_data_type == 'dint' or param_data_type == 'dword':
-                number_of_bytes = 4
-                buffer = self.read_area(area=Area.DB,
-                                        db_number=param_no,
-                                        start_byte=offset,
-                                        number_of_bytes=number_of_bytes)
+            if param_data_type == DataType.Unsigned32:
                 return get_dint(buffer, 0)
-
-            if param_data_type == 'real':
-                number_of_bytes = 4
-                buffer = self.read_area(area=Area.DB,
-                                        db_number=param_no,
-                                        start_byte=offset,
-                                        number_of_bytes=number_of_bytes)
+            if param_data_type == DataType.FloatingPoint32:
                 return round(get_real(buffer, 0), 2)
+
         except Exception as e:
             print(e)
 
-    def write_param(self, buffer, data, param_no, param_data_type, param_idx=0):
+    def write_param(self, buffer: bytearray, data: Union[int, float], param_no: int, param_data_type: DataType,
+                    param_idx: int = 0):
         """
         DB<param_no>.DB<param_data_type><offset>
 
@@ -369,39 +364,26 @@ class SINAMICS:
         offset = 1024 + param_idx
 
         try:
-            if param_data_type == 'byte':
+            if param_data_type == DataType.Integer8 or param_data_type == DataType.Unsigned8:
                 set_byte(buffer, offset, data)
-                self.write_area(area=Area.DB,
-                                db_number=param_no,
-                                start_byte=offset,
-                                data=buffer)
-
-            if param_data_type == 'int' or param_data_type == 'word':
+            if param_data_type == DataType.Integer16 or param_data_type == DataType.Unsigned16:
                 set_int(buffer, offset, data)
-                self.write_area(area=Area.DB,
-                                db_number=param_no,
-                                start_byte=offset,
-                                data=buffer)
-
-            if param_data_type == 'dint' or param_data_type == 'dword':
+            if param_data_type == DataType.Unsigned32:
                 set_dint(buffer, offset, data)
-                self.write_area(area=Area.DB,
-                                db_number=param_no,
-                                start_byte=offset,
-                                data=buffer)
-
-            if param_data_type == 'real':
+            if param_data_type == DataType.FloatingPoint32:
                 set_real(buffer, offset, data)
-                self.write_area(area=Area.DB,
-                                db_number=param_no,
-                                start_byte=offset,
-                                data=buffer)
+
+            self.write_area(area=Area.DB,
+                            db_number=param_no,
+                            start_byte=offset,
+                            data=buffer)
+
         except Exception as e:
             print(e)
 
     def read_values(self):
         result = {}
-        result.update({'Motor Current': self.read_param(param_no=27, param_data_type='real')})
-        result.update({'Motor Active Power': self.read_param(param_no=32, param_data_type='real')})
+        result.update({'Motor Current': self.read_param(param_no=27, param_data_type=DataType.FloatingPoint32, param_idx=0)})
+        result.update({'Motor Active Power': self.read_param(param_no=32, param_data_type=DataType.FloatingPoint32, param_idx=0)})
         # result.update({'Def_Low_Range': self.Def_Low_Range})
         # result.update({'Def_Low_Proc': self.Def_Low_Proc})
