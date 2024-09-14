@@ -398,3 +398,10 @@ class SINAMICS:
                                 data=buffer)
         except Exception as e:
             print(e)
+
+    def read_values(self):
+        result = {}
+        result.update({'Motor Current': self.read_param(param_no=27, param_data_type='real')})
+        result.update({'Motor Active Power': self.read_param(param_no=32, param_data_type='real')})
+        # result.update({'Def_Low_Range': self.Def_Low_Range})
+        # result.update({'Def_Low_Proc': self.Def_Low_Proc})
