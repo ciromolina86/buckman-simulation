@@ -57,35 +57,7 @@ def solisPLC_write_db():
     plc.db_write(1, 0, result_bytearray)
 
 
-def g120():
-    plc = S7_Manager(ip_address='192.168.60.56', rack=0, cpu_slot=0)
-    # print(plc.get_cpu_info())
-
-    print("read 1: original data")
-    buffer = plc.read_area(Area.DB, 27, 1024, 4)  # read db raw data from PLC
-    current = round(get_real(buffer, 0), 2)
-    print(current, 'A')
-
-
-
-    # db2 = Analog_Filt_Scale(buffer)  # interpret raw data as Analog_Filt_Scale object
-    # print(db2.read_values())  # read values from Analog_Filt_Scale object
-    # db2.Cfg_High_Range = 999.0  # modify attributes
-    # db2.Cfg_Low_Range = 111.0  # modify attributes
-    # db2.Cfg_High_Proc = 888.0  # modify attributes
-    # db2.Cfg_Low_Proc = 222.0  # modify attributes
-    # db2.Cfg_High_Warn = 777.0  # modify attributes
-    # db2.Cfg_Low_Warn = 333.0  # modify attributes
-    # print(db2.read_values())
-    # buffer = db2.write_values()  # write Analog_Filt_Scale object attribute values to raw data
-    # plc.write_area(Area.DB, 2, 0, buffer)  # write db raw data to PLC
-    #
-    # print("read 2: modified data")
-    # db2_bytearray_ = plc.read_area(Area.DB, 2, 0, 416)
-    # db2_ = Analog_Filt_Scale(db2_bytearray_)
-    # print(db2_.read_values())
 
 if __name__ == "__main__":
-    # main()
-    g120()
+    main()
 
