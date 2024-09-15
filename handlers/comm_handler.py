@@ -381,7 +381,66 @@ class SINAMICS:
         except Exception as e:
             print(e)
 
+    def write_values(self):
+        """
+        Commissioning
+        p003 - Access level
+        p010 - Drive commissioning parameter filter
+        p100 - IEC/NEMA Standards (0: IEC (50 Hz line, SI units), 1: NEMA (60 Hz line, US units), 2: NEMA (60 Hz line, SI units)),
+        p210 - Drive unit line supply voltage (380 ... 480 V),
+        p300 - Motor type selection (1: Induction motor),
+        p301 - Motor code (0 = enter motor data),
+        p304 - Rated motor voltage (VAC),
+        p305 - Rated motor current (Amps),
+        p307 - Rated motor power (kW),
+        p308 - Rated motor power factor,
+        p309 - Rated motor efficiency (%),
+        p310 - Rated motor frequency (Hz),
+        p311 - Rated motor speed (rpm),
+        p322 - Maximum motor speed (rpm)
+        p323 - Maximum motor current (Amps)
+        p332 - Rated motor power factor
+        p335 - Motor cooling (0: Natural ventilation, 1: Forced cooling)
+        p500 - Technology application (1: Pumps and fans, 3: Pumps and fans, efficiency optimization)
+        p501 - Technological application (Standard Drive Control) (0: Constant load (linear characteristic), 1: Speed-dependent load (parabolic characteristic))
+        p502 - Technological application (Dynamic Drive Control) (3: Pumps and fans, efficiency optimization)
+        p015 - Macro drive unit
+        p1080 - Minimum speed (rpm)
+        p1082 - Maximum speed (rpm)
+        p758[0, 1, 2, 3] - CU analog inputs characteristic value y1 ([0] = AI0 (X132 3/4), [1] = AI1 (X132 10/11))
+        p1120 - Ramp-function generator ramp-up time (s)
+        p1121 - Ramp-function generator ramp-down time (s)
+        p1135 - OFF3 ramp-down time (s)
+        p1300 - Open-loop/closed-loop control operating mode (0: U/f control with linear characteristic, 2: U/f control with parabolic characteristic, 20: Speed control (encoderless))
+        p1900 - Motor data identification and rotating measurement (2: Identifying motor data (at standstill))
+
+        Field bus interface
+        p2030 - Field bus interface protocol selection (0: No protocol, 7: PROFINET, 10: EtherNet/IP)
+        p8921[0..3] - PN IP address
+        p8922[0..3] - PN Default Gateway
+        p8923[0..3] - PN Subnet Mask
+        p8925 - Activate PN interface configuration (0: No function, 2: Activate and save configuration)
+        p8920[0..239] - PN Name of Station
+        p8980 - Ethernet/IP profile (0: SINAMICS, 1: ODVA AC/DC)
+        p922 - PROFIdrive PZD telegram selection (1: Standard telegram 1, PZD-2/2, 999: Free telegram configuration with BICO)
+        p2079 - PROFIdrive PZD telegram selection extended (1: Standard telegram 1, PZD-2/2, 999: Free telegram configuration with BICO)
+        p2051[0..16] - CI: PROFIdrive PZD send word ([0] 2089[0], [1] 63[0], [2] 27[0], [3] 32[0])
+
+        :return:
+        """
+        pass
+
     def read_values(self):
+        """
+        Drive information
+
+        Motor information
+
+        Field bus interface
+        r2050[0..1] - CO: PROFIdrive PZD receive word
+
+        :return:
+        """
         result = {}
         result.update({'Motor Current': self.read_param(param_no=27, param_data_type=DataType.FloatingPoint32, param_idx=0)})
         result.update({'Motor Active Power': self.read_param(param_no=32, param_data_type=DataType.FloatingPoint32, param_idx=0)})
