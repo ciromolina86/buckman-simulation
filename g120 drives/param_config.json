@@ -1,0 +1,219 @@
+{
+    "p2030": {
+        "param_no": 2030,
+        "param_desc": "Field bus interface protocol selection ",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Integer16"
+    },
+    "p8921[0]": {
+        "param_no": 8921,
+        "param_desc": "PN IP address",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8921[1]": {
+        "param_no": 8921,
+        "param_desc": "PN IP address",
+        "param_idx": 1,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8921[2]": {
+        "param_no": 8921,
+        "param_desc": "PN IP address",
+        "param_idx": 2,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8921[3]": {
+        "param_no": 8921,
+        "param_desc": "PN IP address",
+        "param_idx": 3,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8922[0]": {
+        "param_no": 8922,
+        "param_desc": "PN Default Gateway",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8922[1]": {
+        "param_no": 8922,
+        "param_desc": "PN Default Gateway",
+        "param_idx": 1,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8922[2]": {
+        "param_no": 8922,
+        "param_desc": "PN Default Gateway",
+        "param_idx": 2,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8922[3]": {
+        "param_no": 8922,
+        "param_desc": "PN Default Gateway",
+        "param_idx": 3,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8923[0]": {
+        "param_no": 8923,
+        "param_desc": "PN Subnet Mask",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8923[1]": {
+        "param_no": 8923,
+        "param_desc": "PN Subnet Mask",
+        "param_idx": 1,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8923[2]": {
+        "param_no": 8923,
+        "param_desc": "PN Subnet Mask",
+        "param_idx": 2,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8923[3]": {
+        "param_no": 8923,
+        "param_desc": "PN Subnet Mask",
+        "param_idx": 3,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8925": {
+        "param_no": 8925,
+        "param_desc": "Activate PN interface configuration",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Integer16"
+    },
+    "p8920[0]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[1]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 1,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[2]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 2,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[3]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 3,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[4]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 4,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[5]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 5,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[6]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 6,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[7]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 7,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[8]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 8,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8920[9]": {
+        "param_no": 8920,
+        "param_desc": "PN Name of Station",
+        "param_idx": 9,
+        "param_scaling": "",
+        "param_data_type": "Unsigned8"
+    },
+    "p8980": {
+        "param_no": 8980,
+        "param_desc": "Ethernet/IP profile",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Integer16"
+    },
+    "p922": {
+        "param_no": 922,
+        "param_desc": "PROFIdrive PZD telegram selection ",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Unsigned16"
+    },
+    "p2079": {
+        "param_no": 2079,
+        "param_desc": "PROFIdrive PZD telegram selection extended",
+        "param_idx": 0,
+        "param_scaling": "",
+        "param_data_type": "Integer16"
+    },
+    "p2051[0]": {
+        "param_no": 2051,
+        "param_desc": "PROFIdrive PZD send word",
+        "param_idx": 0,
+        "param_scaling": "4000H",
+        "param_data_type": "Integer16"
+    },
+    "p2051[1]": {
+        "param_no": 2051,
+        "param_desc": "PROFIdrive PZD send word",
+        "param_idx": 1,
+        "param_scaling": "4000H",
+        "param_data_type": "Integer16"
+    },
+    "p2051[2]": {
+        "param_no": 2051,
+        "param_desc": "PROFIdrive PZD send word",
+        "param_idx": 2,
+        "param_scaling": "4000H",
+        "param_data_type": "Integer16"
+    },
+    "p2051[3]": {
+        "param_no": 2051,
+        "param_desc": "PROFIdrive PZD send word",
+        "param_idx": 3,
+        "param_scaling": "4000H",
+        "param_data_type": "Integer16"
+    }
+}
