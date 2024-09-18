@@ -1,219 +1,218 @@
 {
     "p2030": {
-        "number": 2030,
-        "description": "Field bus interface protocol selection ",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Integer16"
+        "Number": 2030,
+        "Parameter Description": "Field bus interface protocol selection ",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Integer16",
+        "Value": 10
     },
     "p8921[0]": {
-        "number": 8921,
-        "description": "PN IP address",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8921,
+        "Parameter Description": "PN IP address",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 192
     },
     "p8921[1]": {
-        "number": 8921,
-        "description": "PN IP address",
-        "index": 1,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8921,
+        "Parameter Description": "PN IP address",
+        "Index": 1,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 168
     },
     "p8921[2]": {
-        "number": 8921,
-        "description": "PN IP address",
-        "index": 2,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8921,
+        "Parameter Description": "PN IP address",
+        "Index": 2,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 60
     },
     "p8921[3]": {
-        "number": 8921,
-        "description": "PN IP address",
-        "index": 3,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8921,
+        "Parameter Description": "PN IP address",
+        "Index": 3,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 56
     },
     "p8922[0]": {
-        "number": 8922,
-        "description": "PN Default Gateway",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8922,
+        "Parameter Description": "PN Default Gateway",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 192
     },
     "p8922[1]": {
-        "number": 8922,
-        "description": "PN Default Gateway",
-        "index": 1,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8922,
+        "Parameter Description": "PN Default Gateway",
+        "Index": 1,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 168
     },
     "p8922[2]": {
-        "number": 8922,
-        "description": "PN Default Gateway",
-        "index": 2,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8922,
+        "Parameter Description": "PN Default Gateway",
+        "Index": 2,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 60
     },
     "p8922[3]": {
-        "number": 8922,
-        "description": "PN Default Gateway",
-        "index": 3,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8922,
+        "Parameter Description": "PN Default Gateway",
+        "Index": 3,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 1
     },
     "p8923[0]": {
-        "number": 8923,
-        "description": "PN Subnet Mask",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8923,
+        "Parameter Description": "PN Subnet Mask",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 255
     },
     "p8923[1]": {
-        "number": 8923,
-        "description": "PN Subnet Mask",
-        "index": 1,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8923,
+        "Parameter Description": "PN Subnet Mask",
+        "Index": 1,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 255
     },
     "p8923[2]": {
-        "number": 8923,
-        "description": "PN Subnet Mask",
-        "index": 2,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8923,
+        "Parameter Description": "PN Subnet Mask",
+        "Index": 2,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 255
     },
     "p8923[3]": {
-        "number": 8923,
-        "description": "PN Subnet Mask",
-        "index": 3,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8923,
+        "Parameter Description": "PN Subnet Mask",
+        "Index": 3,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 0
     },
     "p8925": {
-        "number": 8925,
-        "description": "Activate PN interface configuration",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Integer16"
+        "Number": 8925,
+        "Parameter Description": "Activate PN interface configuration",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Integer16",
+        "Value": 2
     },
     "p8920[0]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 103
     },
     "p8920[1]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 1,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 1,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 49
     },
     "p8920[2]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 2,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 2,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 50
     },
     "p8920[3]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 3,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 3,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 48
     },
     "p8920[4]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 4,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 4,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 120
     },
     "p8920[5]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 5,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 5,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 45
     },
     "p8920[6]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 6,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 6,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 112
     },
     "p8920[7]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 7,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 7,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 110
     },
     "p8920[8]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 8,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 8,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 0
     },
     "p8920[9]": {
-        "number": 8920,
-        "description": "PN Name of Station",
-        "index": 9,
-        "scaling": "",
-        "data_type": "Unsigned8"
+        "Number": 8920,
+        "Parameter Description": "PN Name of Station",
+        "Index": 9,
+        "Scaling": "",
+        "Data Type": "Unsigned8",
+        "Value": 0
     },
     "p8980": {
-        "number": 8980,
-        "description": "Ethernet/IP profile",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Integer16"
+        "Number": 8980,
+        "Parameter Description": "Ethernet/IP profile",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Integer16",
+        "Value": 0
     },
     "p922": {
-        "number": 922,
-        "description": "PROFIdrive PZD telegram selection ",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Unsigned16"
+        "Number": 922,
+        "Parameter Description": "PROFIdrive PZD telegram selection ",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Unsigned16",
+        "Value": 999
     },
-    "p2079": {
-        "number": 2079,
-        "description": "PROFIdrive PZD telegram selection extended",
-        "index": 0,
-        "scaling": "",
-        "data_type": "Integer16"
-    },
-    "p2051[0]": {
-        "number": 2051,
-        "description": "PROFIdrive PZD send word",
-        "index": 0,
-        "scaling": "4000H",
-        "data_type": "Integer16"
-    },
-    "p2051[1]": {
-        "number": 2051,
-        "description": "PROFIdrive PZD send word",
-        "index": 1,
-        "scaling": "4000H",
-        "data_type": "Integer16"
-    },
-    "p2051[2]": {
-        "number": 2051,
-        "description": "PROFIdrive PZD send word",
-        "index": 2,
-        "scaling": "4000H",
-        "data_type": "Integer16"
-    },
-    "p2051[3]": {
-        "number": 2051,
-        "description": "PROFIdrive PZD send word",
-        "index": 3,
-        "scaling": "4000H",
-        "data_type": "Integer16"
+    "p971": {
+        "Number": 971,
+        "Parameter Description": "Save drive object parameters",
+        "Index": 0,
+        "Scaling": "",
+        "Data Type": "Unsigned16",
+        "Value": 1
     }
 }
