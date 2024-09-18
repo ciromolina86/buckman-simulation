@@ -249,12 +249,12 @@ class Analog_Filt_Scale:
 
 
 class DataType(enum.IntEnum):
-    Integer8 = 1
-    Integer16 = 2
-    Unsigned8 = 1
-    Unsigned16 = 2
-    Unsigned32 = 4
-    FloatingPoint32 = 4
+    Integer8 = 1  # 1
+    Unsigned8 = 2  # 1
+    Integer16 = 3  # 2
+    Unsigned16 = 4  # 2
+    Unsigned32 = 5  # 4
+    FloatingPoint32 = 6  # 4
 
 
 class SINAMICS:
@@ -265,7 +265,7 @@ class SINAMICS:
         self._tcp_port = tcp_port
 
         self._plc = snap7.client.Client()
-        # self._plc.connect(self._ip_address, self._rack, self._cpu_slot)
+        self._plc.connect(self._ip_address, self._rack, self._cpu_slot)
 
         if self._plc.get_connected():
             print("PLC connected successfully!")
@@ -326,18 +326,52 @@ class SINAMICS:
         offset = 1024 + param_idx
 
         try:
-            buffer = self.read_area(area=Area.DB,
-                                    db_number=param_no,
-                                    start_byte=offset,
-                                    number_of_bytes=param_data_type)
-
-            if param_data_type == DataType.Integer8 or param_data_type == DataType.Unsigned8:
+            if param_data_type == DataType.Integer8:
+                # print('Integer8', param_data_type)
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=1)
                 return get_byte(buffer, 0)
-            if param_data_type == DataType.Integer16 or param_data_type == DataType.Unsigned16:
+
+            if param_data_type == DataType.Unsigned8:
+                # print('Unsigned8', param_data_type)
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=1)
+                return get_byte(buffer, 0)
+
+            if param_data_type == DataType.Integer16:
+                # print('Integer16', param_data_type)
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=2)
                 return get_int(buffer, 0)
+
+            if param_data_type == DataType.Unsigned16:
+                # print('Unsigned16', param_data_type)
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=2)
+                return get_word(buffer, 0)
+
             if param_data_type == DataType.Unsigned32:
-                return get_dint(buffer, 0)
+                # print('Unsigned32', param_data_type)
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=4)
+                return get_dword(buffer, 0)
+
             if param_data_type == DataType.FloatingPoint32:
+                # print('FloatingPoint32', param_data_type)
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=param_no,
+                                        start_byte=offset,
+                                        number_of_bytes=4)
                 return round(get_real(buffer, 0), 2)
 
         except Exception as e:
@@ -381,15 +415,32 @@ class SINAMICS:
         except Exception as e:
             print(e)
 
-    def write_values(self):
-        pass
+    def write_values(self, params):
+        try:
+            for param in params:
+                buffer = self.read_area(area=Area.DB,
+                                        db_number=params[param]['number'],
+                                        start_byte=1024 + params[param]['index'],
+                                        number_of_bytes=DataType[params[param]['data_type']])
+
+                set_int(buffer, 0, params[param]['value'])
+
+                self.write_area(area=Area.DB,
+                                db_number=params[param]['number'],
+                                start_byte=1024 + params[param]['index'],
+                                data=buffer)
+        except Exception as e:
+            print(e)
 
     def read_values(self, params):
-        result = {}
-        for param in params.keys():
-            temp = params[param]
-            temp.update({'value': self.read_param(param_no=params[param]['number'],
-                                                  param_data_type=DataType[params[param]['data_type']],
-                                                  param_idx=params[param]['index'])})
-            result.update({param: temp})
-        print(json.dumps(result, indent=4))
+        try:
+            result = {}
+            for param in params.keys():
+                temp = params[param]
+                temp.update({'Value': self.read_param(param_no=params[param]['Number'],
+                                                      param_data_type=DataType[params[param]['Data Type']],
+                                                      param_idx=params[param]['Index'])})
+                result.update({param: temp})
+            return result
+        except Exception as e:
+            print(f'ERROR ', e)

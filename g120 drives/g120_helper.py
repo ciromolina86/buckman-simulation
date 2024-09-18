@@ -1,18 +1,81 @@
 import json
+import pandas as pd
 
 from handlers.comm_handler import *
 
 
+def get_chars(name: str):
+    return [ord(char) for char in name]
+
+
+def set_device_name(device_name):
+    list_chars = get_chars(device_name)
+
+
 def main():
+    sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
+
     with open('param_config.json', 'r') as file:
         params = json.load(file)
 
+    # sinamics_g120.write_values(params)
+
+    print(json.dumps(sinamics_g120.read_values(params), indent=2))
+
+
+def read_changed_params():
     sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
-    sinamics_g120.read_values(params)
+
+    with open('changed_params_config.json', 'r') as file:
+        params = json.load(file)
+
+    changed_params_990 = []
+    changed_params_991 = []
+
+    for idx in range(0, 100, 1):
+        for param in params.keys():
+            params[param]["index"] = idx
+
+        temp = sinamics_g120.read_values(params)
+        changed_params_990.append(temp['r0990']['value'])
+        changed_params_991.append(temp['r0991']['value'])
+        time.sleep(0.1)
+
+    print(f'changed_params_990 ({len(set(changed_params_990))}): {set(changed_params_990)}')
+    print(f'changed_params_991 ({len(set(changed_params_991))}): {set(changed_params_991)}')
+
+
+def read_ref_params():
+    sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
+
+    df = pd.read_excel('g120-drive-parameters.xlsx', sheet_name='Reference', index_col='Parameter')
+
+    params = df.to_dict(orient='index')
+    # print(params)
+
+    params = sinamics_g120.read_values(params)
+    print(json.dumps(params, indent=2))
+
+    df = pd.DataFrame(params)
+    print(df)
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    # read_changed_params()
+    read_ref_params()
+    # print(get_chars('pmp-15-11'))
+
+    sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
+    print(sinamics_g120.read_values({
+        "p27": {
+            "Number": 27,
+            "Parameter Description": "CO: Act. output current",
+            "Index": 0,
+            "Scaling": "p2002",
+            "Data Type": "FloatingPoint32",
+        }
+    }))
 
     # support code
     # params = ['p2030', 'p8921[0]', 'p8921[1]', 'p8921[2]', 'p8921[3]', 'p8922[0]', 'p8922[1]', 'p8922[2]', 'p8922[3]',
@@ -99,7 +162,7 @@ if __name__ == "__main__":
     p2001 - Reference voltage (Vrms)
     p2002 - Reference current (Arms)
     p2003 - Reference torque (Nm)
-    r2004 - Reference power (kW)
+    p2004 - Reference power (kW)
     p2006 - Reference temperature (*C)
 
     Inverter
