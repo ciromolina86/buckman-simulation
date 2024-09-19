@@ -322,7 +322,7 @@ class SINAMICS:
         :param param_idx:
         :return:
         """
-
+        print(f'Reading parameter: {param_no}')
         offset = 1024 + param_idx
 
         try:
@@ -340,7 +340,7 @@ class SINAMICS:
                                         db_number=param_no,
                                         start_byte=offset,
                                         number_of_bytes=1)
-                return hex(get_byte(buffer, 0))
+                return get_byte(buffer, 0)
 
             if param_data_type == DataType.Integer16:
                 # print('Integer16', param_data_type)
@@ -356,7 +356,7 @@ class SINAMICS:
                                         db_number=param_no,
                                         start_byte=offset,
                                         number_of_bytes=2)
-                return hex(get_word(buffer, 0))
+                return get_word(buffer, 0)
 
             if param_data_type == DataType.Unsigned32:
                 # print('Unsigned32', param_data_type)
@@ -364,7 +364,7 @@ class SINAMICS:
                                         db_number=param_no,
                                         start_byte=offset,
                                         number_of_bytes=4)
-                return hex(get_dword(buffer, 0))
+                return get_dword(buffer, 0)
 
             if param_data_type == DataType.FloatingPoint32:
                 # print('FloatingPoint32', param_data_type)
@@ -377,7 +377,7 @@ class SINAMICS:
         except Exception as e:
             print(e)
 
-    def write_param(self, buffer: bytearray, data: Union[int, float], param_no: int, param_data_type: DataType,
+    def write_param(self, data: Union[int, float], param_no: int, param_data_type: DataType,
                     param_idx: int = 0):
         """
         DB<param_no>.DB<param_data_type><offset>
@@ -387,52 +387,82 @@ class SINAMICS:
         <param_data_type> … is a DB offset size depending on Data type.
         <offset> … for SINAMICS G120X is calculated as 1024+<param_idx>
 
-        :param buffer:
         :param data:
         :param param_no:
         :param param_data_type:
         :param param_idx:
         :return:
         """
+        print(f'Writing parameter: {param_no}')
 
+        buffer = None
         offset = 1024 + param_idx
 
         try:
-            if param_data_type == DataType.Integer8 or param_data_type == DataType.Unsigned8:
-                set_byte(buffer, offset, data)
-            if param_data_type == DataType.Integer16 or param_data_type == DataType.Unsigned16:
-                set_int(buffer, offset, data)
-            if param_data_type == DataType.Unsigned32:
-                set_dint(buffer, offset, data)
-            if param_data_type == DataType.FloatingPoint32:
-                set_real(buffer, offset, data)
+            if param_data_type == DataType.Integer8:
+                buffer = bytearray(1)
+                set_byte(buffer, 0, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
+            if param_data_type == DataType.Unsigned8:
+                buffer = bytearray(1)
+                set_byte(buffer, 0, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
 
-            self.write_area(area=Area.DB,
-                            db_number=param_no,
-                            start_byte=offset,
-                            data=buffer)
+            if param_data_type == DataType.Integer16:
+                buffer = bytearray(2)
+                set_int(buffer, 0, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
+
+            if param_data_type == DataType.Unsigned16:
+                buffer = bytearray(2)
+                set_word(buffer, 0, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
+
+            if param_data_type == DataType.Unsigned32:
+                buffer = bytearray(4)
+                set_dword(buffer, 0, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
+
+            if param_data_type == DataType.FloatingPoint32:
+                buffer = bytearray(4)
+                set_real(buffer, offset, data)
+                self.write_area(area=Area.DB,
+                                db_number=param_no,
+                                start_byte=offset,
+                                data=buffer)
 
         except Exception as e:
-            print(e)
+            print('ERROR - ', e)
 
     def write_values(self, params):
+        print('Writing values...')
         try:
-            for param in params:
-                buffer = self.read_area(area=Area.DB,
-                                        db_number=params[param]['number'],
-                                        start_byte=1024 + params[param]['index'],
-                                        number_of_bytes=DataType[params[param]['data_type']])
+            for param in params.keys():
+                self.write_param(data=params[param]['Value'],
+                                 param_no=params[param]['Number'],
+                                 param_data_type=DataType[params[param]['Data Type']],
+                                 param_idx=params[param]['Index'])
 
-                set_int(buffer, 0, params[param]['value'])
-
-                self.write_area(area=Area.DB,
-                                db_number=params[param]['number'],
-                                start_byte=1024 + params[param]['index'],
-                                data=buffer)
         except Exception as e:
-            print(e)
+            print('ERROR - ', e)
 
     def read_values(self, params):
+        print('Reading values...')
         try:
             result = {}
             for param in params.keys():
@@ -442,5 +472,6 @@ class SINAMICS:
                                                       param_idx=params[param]['Index'])})
                 result.update({param: temp})
             return result
+
         except Exception as e:
-            print(f'ERROR ', e)
+            print(f'ERROR - ', e)
