@@ -340,7 +340,7 @@ class SINAMICS:
                                         db_number=param_no,
                                         start_byte=offset,
                                         number_of_bytes=1)
-                return get_byte(buffer, 0)
+                return hex(get_byte(buffer, 0))
 
             if param_data_type == DataType.Integer16:
                 # print('Integer16', param_data_type)
@@ -356,7 +356,7 @@ class SINAMICS:
                                         db_number=param_no,
                                         start_byte=offset,
                                         number_of_bytes=2)
-                return get_word(buffer, 0)
+                return hex(get_word(buffer, 0))
 
             if param_data_type == DataType.Unsigned32:
                 # print('Unsigned32', param_data_type)
@@ -364,7 +364,7 @@ class SINAMICS:
                                         db_number=param_no,
                                         start_byte=offset,
                                         number_of_bytes=4)
-                return get_dword(buffer, 0)
+                return hex(get_dword(buffer, 0))
 
             if param_data_type == DataType.FloatingPoint32:
                 # print('FloatingPoint32', param_data_type)
