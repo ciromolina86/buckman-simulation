@@ -1,0 +1,16 @@
+{
+    "r0990": {
+        "number": 990,
+        "description": "List of modified parameters 1",
+        "index": 0,
+        "scaling": "",
+        "data_type": "Unsigned16"
+    },
+    "r0991": {
+        "number": 991,
+        "description": "List of modified parameters 2",
+        "index": 0,
+        "scaling": "",
+        "data_type": "Unsigned16"
+    }
+}
