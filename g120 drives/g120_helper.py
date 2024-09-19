@@ -15,9 +15,8 @@ def set_device_name(device_name):
 def main():
     sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
 
-    with open('param_config.json', 'r') as file:
-        params = json.load(file)
-
+    df = pd.read_excel('g120-drive-parameters.xlsx', sheet_name='Parameters', index_col='Parameter')
+    params = df.to_dict(orient='index')
     # sinamics_g120.write_values(params)
 
     print(json.dumps(sinamics_g120.read_values(params), indent=2))
@@ -53,29 +52,29 @@ def read_ref_params():
     params = df.to_dict(orient='index')
     # print(params)
 
-    params = sinamics_g120.read_values(params)
-    print(json.dumps(params, indent=2))
+    return sinamics_g120.read_values(params)
 
-    df = pd.DataFrame(params)
-    print(df)
+    # todo
+    # df = pd.DataFrame(params)
+    # df.to_excel('g120-drive-parameters.xlsx', sheet_name='Reference')
 
 
 if __name__ == "__main__":
-    # main()
+    ref_params = read_ref_params()
+    main()
     # read_changed_params()
-    read_ref_params()
     # print(get_chars('pmp-15-11'))
 
-    sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
-    print(sinamics_g120.read_values({
-        "p27": {
-            "Number": 27,
-            "Parameter Description": "CO: Act. output current",
-            "Index": 0,
-            "Scaling": "p2002",
-            "Data Type": "FloatingPoint32",
-        }
-    }))
+    # sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
+    # print(sinamics_g120.read_values({
+    #     "p27": {
+    #         "Number": 27,
+    #         "Parameter Description": "CO: Act. output current",
+    #         "Index": 0,
+    #         "Scaling": "p2002",
+    #         "Data Type": "FloatingPoint32",
+    #     }
+    # }))
 
     # support code
     # params = ['p2030', 'p8921[0]', 'p8921[1]', 'p8921[2]', 'p8921[3]', 'p8922[0]', 'p8922[1]', 'p8922[2]', 'p8922[3]',
@@ -183,8 +182,6 @@ if __name__ == "__main__":
     r0032 - Active power actual value smoothed (kW)
     r0035 - Motor temperature (*C)
     r0038 - Power factor smoothed
-    r0039[0..2] - CO: Energy display (kWh) ([0] = Energy balance (sum), [1] = Energy drawn, [2] = Energy fed back)
-    r0042[0..2] - CO: Process energy display (Wh) ([0] = Energy balance (sum), [1] = Energy drawn, [2] = Energy fed back)
 
     Communication
     r0052 - CO/BO: Status word 1
