@@ -12,16 +12,6 @@ def set_device_name(device_name):
     list_chars = get_chars(device_name)
 
 
-def main():
-    sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
-
-    df = pd.read_excel('g120-drive-parameters.xlsx', sheet_name='Parameters', index_col='Parameter')
-    params = df.to_dict(orient='index')
-    # sinamics_g120.write_values(params)
-
-    print(json.dumps(sinamics_g120.read_values(params), indent=2))
-
-
 def read_changed_params():
     sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
 
@@ -66,38 +56,23 @@ def write_commissioning_params():
     sinamics_g120.write_values(params)
 
 
+def read_all_params():
+    sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
+    df = pd.read_excel('g120-drive-parameters.xlsx', sheet_name='Parameters', index_col='Parameter')
+    params = df.to_dict(orient='index')
+    params = sinamics_g120.read_values(params)
+    df = pd.DataFrame.from_dict(params, orient='index')
+    df.to_excel('g120-drive-parameters.xlsx', sheet_name='Parameters', index=True, index_label='Parameter')
+
+
+def main():
+    # read_ref_params()
+    # write_commissioning_params()
+    read_all_params()
+
+
 if __name__ == "__main__":
-    # ref_params = read_ref_params()
-    # print(ref_params)
-    # main()
-    # read_changed_params()
-    # print(get_chars('pmp-15-11'))
-    write_commissioning_params()
-
-    # sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
-    # print(sinamics_g120.read_values(
-    #     {"p971": {
-    #         "Number": 2051,
-    #         "Parameter Description": "",
-    #         "Index": 5,
-    #         "Scaling": "",
-    #         "Data Type": "Unsigned32",
-    #         "Value": 0
-    #     }}))
-
-    # support code
-    # params = ['p2030', 'p8921[0]', 'p8921[1]', 'p8921[2]', 'p8921[3]', 'p8922[0]', 'p8922[1]', 'p8922[2]', 'p8922[3]',
-    #           'p8923[0]', 'p8923[1]',
-    #           'p8923[2]', 'p8923[3]', 'p8925', 'p8920[0]', 'p8920[1]', 'p8920[2]', 'p8920[3]', 'p8920[4]', 'p8920[5]',
-    #           'p8920[6]', 'p8920[7]',
-    #           'p8920[8]', 'p8920[9]', 'p8980', 'p922', 'p2079', 'p2051[0]', 'p2051[1]', 'p2051[2]', 'p2051[3]']
-    #
-    # result = {}
-    # for param in params:
-    #     result.update({param: {'parameter': 21, 'description': '', 'index': 0, 'scaling': '', 'data_type': 'FloatingPoint32'}})
-    #
-    # print(json.dumps(result, indent=4))
-    # print(DataType[result['r0021']['param_data_type']])
+    main()
 
     """     WRITE PARAMETERS
     Commissioning
