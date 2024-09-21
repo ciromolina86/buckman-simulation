@@ -62,7 +62,9 @@ def read_all_params():
     params = df.to_dict(orient='index')
     params = sinamics_g120.read_values(params)
     df = pd.DataFrame.from_dict(params, orient='index')
-    df.to_excel('g120-drive-parameters.xlsx', sheet_name='Parameters', index=True, index_label='Parameter')
+    df.to_excel('g120x-parameters.xlsx',
+                sheet_name='Parameters', columns=['Parameter Description','Value','EU'],
+                index=True, index_label='Parameter')
 
 
 def main():
