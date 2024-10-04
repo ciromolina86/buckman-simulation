@@ -44,25 +44,21 @@ def read_ref_params():
 
     return sinamics_g120.read_values(params)
 
-    # todo
-    # df = pd.DataFrame(params)
-    # df.to_excel('g120-drive-parameters.xlsx', sheet_name='Reference')
-
 
 def write_commissioning_params():
-    sinamics_g120 = SINAMICS(ip_address='192.168.60.57')
-    df = pd.read_excel('g120-drive-parameters.xlsx', sheet_name='Sheet1', index_col='Parameter')
+    sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
+    df = pd.read_excel('g120-drive-parameters.xlsx', sheet_name='Commissioning (2)', index_col='Parameter')
     params = df.to_dict(orient='index')
     sinamics_g120.write_values(params)
 
 
 def read_all_params():
     sinamics_g120 = SINAMICS(ip_address='192.168.60.56')
-    df = pd.read_excel('g120-drive-parameters.xlsx', sheet_name='Parameters', index_col='Parameter')
+    df = pd.read_excel('g120-drive-parameters.xlsx', sheet_name='Reference', index_col='Parameter')
     params = df.to_dict(orient='index')
     params = sinamics_g120.read_values(params)
     df = pd.DataFrame.from_dict(params, orient='index')
-    df.to_excel('g120-drive-parameters.xlsx', sheet_name='Parameters', index=True, index_label='Parameter')
+    df.to_excel(f'PMP-15-11_G120X-drive-parameters.xlsx', sheet_name='Parameters', index=True, index_label='Parameter')
 
 
 def main():
